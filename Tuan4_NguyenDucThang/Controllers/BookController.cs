@@ -9,21 +9,21 @@ namespace Tuan4_NguyenDucThang.Controllers
     public class BookController : Controller
     {
         // GET: Book
-        MyDataDataContext data = new MyDataDataContext();   
+        MyDataDataContext data = new MyDataDataContext();
         public ActionResult Index()
         {
             return View();
         }
         public ActionResult ListBook()
         {
-            var all_Book = from ss in data.Saches select ss;    
+            var all_Book = from ss in data.Saches select ss;
             return View(all_Book);
         }
 
         // Details
         public ActionResult Detail(int id)
         {
-            var D_book = data.Saches.Where(m=>m.masach == id).First();
+            var D_book = data.Saches.Where(m => m.masach == id).First();
             return View(D_book);
         }
 
@@ -41,20 +41,20 @@ namespace Tuan4_NguyenDucThang.Controllers
             var E_dayUpdate = Convert.ToDateTime(collection["ngaycapnhap"]);
             var E_quantityofinventory = Convert.ToInt32(collection["soluongton"]);
 
-            if(string.IsNullOrEmpty(E_nameBook))
+            if (string.IsNullOrEmpty(E_nameBook))
             {
                 ViewData["Error"] = "Don't Empty";
             }
             else
             {
-                s.tensach = E_nameBook; 
-                s.hinh = E_image;   
+                s.tensach = E_nameBook;
+                s.hinh = E_image;
                 s.giaban = E_price;
                 s.ngaycapnhat = E_dayUpdate;
                 s.soluongton = E_quantityofinventory;
                 data.Saches.InsertOnSubmit(s);
                 data.SubmitChanges();
-                return RedirectToAction("ListBook");   
+                return RedirectToAction("ListBook");
             }
             return this.Create();
 
@@ -69,7 +69,7 @@ namespace Tuan4_NguyenDucThang.Controllers
         [HttpPost]
         public ActionResult Edit(FormCollection collection, int id)
         {
-            var E_id = data.Saches.First(m => m.masach == id);  
+            var E_id = data.Saches.First(m => m.masach == id);
             var E_nameBook = collection["tensach"];
             var E_image = collection["hinh"];
             var E_price = Convert.ToDecimal(collection["giaban"]);
@@ -96,7 +96,7 @@ namespace Tuan4_NguyenDucThang.Controllers
 
 
         // Delete
-        public ActionResult Delete (int id)
+        public ActionResult Delete(int id)
         {
             var D_book = data.Saches.Where(m => m.masach == id).First();
             return View(D_book);
@@ -113,11 +113,11 @@ namespace Tuan4_NguyenDucThang.Controllers
         // get Path img in system
         public string ProcessUpLoad(HttpPostedFileBase file)
         {
-            if(file == null)
+            if (file == null)
             {
                 return "";
             }
-            file.SaveAs(Server.MapPath("~/Content/images/" + file.FileName));  
+            file.SaveAs(Server.MapPath("~/Content/images/" + file.FileName));
             return "/Content/images/" + file.FileName;
         }
     }
