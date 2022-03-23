@@ -1,11 +1,10 @@
 ﻿@model IEnumerable<Tuan4_NguyenDucThang.Models.Sach>
-
 @{
     ViewBag.Title = "ListBook";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>ListBook</h2>
+<h2>Thông tin sách</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -55,8 +54,8 @@
                 @Html.DisplayFor(modelItem => item.soluongton)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.masach }, new { @class = "btn btn-success" }) 
-                @Html.ActionLink("Detail", "Detail", new { id = item.masach }, new { @class = "btn btn-success" }) 
+                @Html.ActionLink("Edit", "Edit", new { id = item.masach }, new { @class = "btn btn-success" })
+                @Html.ActionLink("Detail", "Detail", new { id = item.masach }, new { @class = "btn btn-success" })
                 @Html.ActionLink("Delete", "Delete", new { id = item.masach }, new { @class = "btn btn-success" })
             </td>
         </tr>

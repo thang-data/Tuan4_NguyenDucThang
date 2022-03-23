@@ -1,14 +1,11 @@
 ﻿@model PagedList.IPagedList<Tuan4_NguyenDucThang.Models.Sach>
-@using PagedList.Mvc 
-
-
-
+@using PagedList.Mvc;
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Library Book</h2>
+<h2>HUTECH SÁCH</h2>
 <div class="row">
     @foreach (var item in Model)
     {
@@ -25,14 +22,14 @@
                 </div>
                 <div class="panel-footer clearfix">
                     <div class="pull-right">
-                        @* <a href="#" class="btn btn-primary">Order</a>
-                        @Html.ActionLink("Read more...", "Detail", new
-                        {
-                            id =
-                        item.masach
-                        }, new { @class = "btn btn-default" }) *@
+                        @*<a href="#" class="btn btn-primary">Order</a>
+                            @Html.ActionLink("Read more...", "Detail", new
+                            {
+                                id =
+                            item.masach
+                            }, new { @class = "btn btn-default" })*@
                         <div class="DatMua">
-                            <a class="btn btn-success" href="@Url.Action("ThemGioHang", "GioHang", new {@id = item.masach, @strURL = Request.Url.ToString() })">Dat mua</a>
+                            <a class="btn btn-success" href="@Url.Action("ThemGioHang", "GioHang",new { @id = item.masach, @strURL = Request.Url.ToString() })">Đặt mua</a>
                         </div>
                     </div>
                 </div>
@@ -40,7 +37,6 @@
         </div>
     }
 </div>
-
 <div>
     <div>
         Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) /
@@ -72,30 +68,24 @@
 </style>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script>
-$(document).ready(function () {
-var maxLength = 100;
-$(".show-read-more").each(function () {
-var myStr = $(this).text();
-if ($.trim(myStr).length > maxLength) {
-var newStr = myStr.substring(0, maxLength);
-var removedStr = myStr.substring(maxLength, $.trim(myStr).length);
-$(this).empty().html(newStr);
-
-$(this).append(' <a href="javascript:void(0);" class="read-
-more">đọc tiếp...</a>');
-
-$(this).append('<span class="more-text">' + removedStr +
-'</span>');
-}
-});
-$(".read-more").click(function () {
-$(this).siblings(".more-text").contents().unwrap();
-
-27
-
-$(this).remove();
-});
-});
+    $(document).ready(function () {
+        var maxLength = 100;
+        $(".show-read-more").each(function () {
+            var myStr = $(this).text();
+            if ($.trim(myStr).length > maxLength) {
+                var newStr = myStr.substring(0, maxLength);
+                var removedStr = myStr.substring(maxLength, $.trim(myStr).length);
+                $(this).empty().html(newStr);
+                $(this).append(' <a href="javascript:void(0);" class="read-more">đọc tiếp...</a>');
+                $(this).append('<span class="more-text">' + removedStr +
+                    '</span>');
+            }
+        });
+        $(".read-more").click(function () {
+            $(this).siblings(".more-text").contents().unwrap();
+            $(this).remove();
+        });
+    });
 </script>
 <style>
     .show-read-more .more-text {

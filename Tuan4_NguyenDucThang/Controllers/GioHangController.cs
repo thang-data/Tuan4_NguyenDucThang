@@ -3,130 +3,161 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Tuan4_NguyenDucThang.Controllers;
 using Tuan4_NguyenDucThang.Models;
 
 namespace Tuan4_NguyenDucThang.Controllers
 {
     public class GioHangController : Controller
     {
-        // GET: GioHang
         MyDataDataContext data = new MyDataDataContext();
-
-        public ActionResult Index()
+        public List<GioHang> Laygiohang()
         {
-            return View();
-        }
-        public List<GioHang> LayGioHang()
-        {
-            List<GioHang> listGioHang = Session["GioHang"] as List<GioHang>;
-            if (listGioHang == null)
+            List<GioHang> lstGiohang = Session["GioHang"] as List<GioHang>;
+            if (lstGiohang == null)
             {
-                listGioHang = new List<GioHang>();
-                Session["GioHang"] = listGioHang;
+                lstGiohang = new List<GioHang>();
+                Session["GioHang"] = lstGiohang;
             }
-            return listGioHang;
+            return lstGiohang;
         }
-        public ActionResult addGioHang(int id, string strURL)
+        public ActionResult ThemGioHang(int id, string strURL)
         {
-            List<GioHang> listGioHang = LayGioHang();
-            GioHang sanpham = listGioHang.Find(n => n.masach == id);
+            List<GioHang> lstGiohang = Laygiohang();
+            GioHang sanpham = lstGiohang.Find(n => n.masach == id);
             if (sanpham == null)
             {
                 sanpham = new GioHang(id);
-                listGioHang.Add(sanpham);
+                lstGiohang.Add(sanpham);
                 return Redirect(strURL);
             }
             else
             {
-                sanpham.iSoLuong++;
+                sanpham.iSoluong++;
                 return Redirect(strURL);
             }
         }
-
-        private int TongSoLuong()
+        private int Tongsoluong()
         {
             int tsl = 0;
-            List<GioHang> listGioHang = Session["GioHang"] as List<GioHang>;
-            if (listGioHang != null)
+            List<GioHang> lstGiohang = Session["Giohang"] as List<GioHang>;
+            if (lstGiohang != null)
             {
-                tsl = listGioHang.Sum(n => n.iSoLuong);
+                tsl = lstGiohang.Sum(n => n.iSoluong);
             }
             return tsl;
         }
-
-        private int SumProducts()
+        private int TongsoluongSanpham()
         {
             int tsl = 0;
-            List<GioHang> listGioHang = Session["GioHang"] as List<GioHang>;
-            if (listGioHang != null)
+            List<GioHang> lstGiohang = Session["Giohang"] as List<GioHang>;
+            if (lstGiohang != null)
             {
-                tsl = listGioHang.Count;
+                tsl = lstGiohang.Count;
             }
             return tsl;
         }
-
-        private double SumMoney()
+        private double Tongtien()
         {
-            double sum = 0;
-            List<GioHang> listGioHang = Session["GioHang"] as List<GioHang>;
-            if (listGioHang != null)
+            double tt = 0;
+            List<GioHang> lstGiohang = Session["Giohang"] as List<GioHang>;
+            if (lstGiohang != null)
             {
-                sum = listGioHang.Sum(n => n.dThanhTien);
+                tt = lstGiohang.Sum(n => n.dThanhtien);
             }
-            return sum;
+            return tt;
         }
-
         public ActionResult GioHang()
         {
-            List<GioHang> listGioHang = LayGioHang();
-            ViewBag.TongSoLuong = TongSoLuong();
-            ViewBag.SumMonney = SumMoney();
-            ViewBag.SumProducts = SumProducts();
-            return View(listGioHang);
+            List<GioHang> lstGiohang = Laygiohang();
+            ViewBag.Tongsoluong = Tongsoluong();
+            ViewBag.Tongtien = Tongtien();
+            ViewBag.Tongsoluongsanpham = TongsoluongSanpham();
+            return View(lstGiohang);
         }
-
         public ActionResult GioHangPartial()
         {
-            ViewBag.TongSoLuong = TongSoLuong();
-            ViewBag.SumMonney = SumMoney();
-            ViewBag.SumProducts = SumProducts();
+            List<GioHang> lstGiohang = Laygiohang();
+            ViewBag.Tongsoluong = Tongsoluong();
+            ViewBag.Tongtien = Tongtien();
+            ViewBag.Tongsoluongsanpham = TongsoluongSanpham();
             return PartialView();
         }
-
-        // DeleteGioHang
-        public ActionResult XoaGiohang(int id)
+        public ActionResult XoaGioHang(int id)
         {
-            List<GioHang> listGioHang = LayGioHang();
-            GioHang sanpham = listGioHang.SingleOrDefault(n => n.masach == id);
+            List<GioHang> lstGiohang = Laygiohang();
+            GioHang sanpham = lstGiohang.SingleOrDefault(n => n.masach == id);
             if (sanpham != null)
             {
-                listGioHang.RemoveAll(n => n.masach == id);
+                lstGiohang.RemoveAll(n => n.masach == id);
                 return RedirectToAction("GioHang");
             }
             return RedirectToAction("GioHang");
         }
-
-        //UpdateGioHang
-        public ActionResult CapnhatGiohang(int id, FormCollection collection)
+        public ActionResult CapNhatGioHang(int id, FormCollection collection)
         {
-            List<GioHang> listGioHang = LayGioHang();
-            GioHang sanpham = listGioHang.SingleOrDefault(n => n.masach == id);
+            List<GioHang> lstGiohang = Laygiohang();
+            GioHang sanpham = lstGiohang.SingleOrDefault(n => n.masach == id);
             if (sanpham != null)
             {
-                sanpham.iSoLuong = int.Parse(collection["txtSolg"].ToString());
+                sanpham.iSoluong = int.Parse(collection["txtSolg"].ToString());
             }
             return RedirectToAction("GioHang");
         }
-
-        // DeleteAllGioHang
-        public ActionResult DeleteAllGioHang()
+        public ActionResult XoaTatCaGioHang()
         {
-            List<GioHang> listGioHang = LayGioHang();
-            listGioHang.Clear();
+            List<GioHang> lstGiohang = Laygiohang();
+            lstGiohang.Clear();
             return RedirectToAction("GioHang");
         }
+        [HttpGet]
+        //commit lan 1
+        public ActionResult DatHang()
+        {
+            if (Session["TaiKhoan"] == null || Session["TaiKhoan"].ToString() == "")
+            {
+                return RedirectToAction("DangNhap", "NguoiDung");
+            }
+            //if(Session["GioHang"]== null)
+            //{
+            //    return RedirectToAction("Index", "Sach");
+            //}
+            List<GioHang> lstGioHang = Laygiohang();
+            ViewBag.TongSoLuong = Tongsoluong();
+            ViewBag.TongTien = Tongtien();
+            ViewBag.TongSoLuongSanPham = TongsoluongSanpham();
+            return View(lstGioHang);
+        }
+        public ActionResult DatHang(FormCollection collection)
+        {
+            DonHang dh = new DonHang();
+            KhachHang kh = new KhachHang();
+            Sach s = new Sach();
+            List<GioHang> gh = Laygiohang();
+            var ngaygiao = String.Format("{ 0:MM/dd/yyyy}", collection["NgayGiao"]);
+            dh.makh = kh.makh;
+            dh.ngaydat = DateTime.Now;
+            dh.ngaygiao = DateTime.Parse(ngaygiao);
+            dh.giaohang = false;
+            dh.thanhtoan = false;
 
+            data.DonHangs.InsertOnSubmit(dh);
+            data.SubmitChanges();
+            foreach (var item in gh)
+            {
+                ChiTietDonHang ctdh = new ChiTietDonHang();
+                ctdh.madon = dh.madon;
+                ctdh.masach = item.masach;
+                ctdh.soluong = item.iSoluong;
+                ctdh.gia = (decimal)item.giaban;
+                s = data.Saches.Single(n => n.masach == item.masach);
+                s.soluongton -= ctdh.soluong;
+                data.SubmitChanges();
+                data.ChiTietDonHangs.InsertOnSubmit(ctdh);
+            }
+            data.SubmitChanges();
+            Session["GioHang"] = null;
+            return RedirectToAction("XacNhanDonHang", "GioHang");
 
+        }
     }
 }
