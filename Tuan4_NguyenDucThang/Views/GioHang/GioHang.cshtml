@@ -1,10 +1,10 @@
-﻿@model IEnumerable<Tuan4_NguyenDucThong.Models.GioHang>
+﻿@model IEnumerable<Tuan4_NguyenDucThang.Models.GioHang>
 
 @{
     ViewBag.Title = "GioHang";
-    Layout = "~/Views/Shaned/_Layout.cshtml";
-
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 <h2>Giỏ hàng</h2>
 <table class="table">
     <tr>
@@ -23,16 +23,15 @@
             <td> <img src="@item.hinh" width="180" /> </td>
             @using (Html.BeginForm("CapnhatGiohang", "GioHang", new
             {
-                @id =
-                 item.masach
+                @id =item.masach
             }))
             {
                 <td>@String.Format("{0:0,0}", item.giaban) VNĐ </td>
                 <td>
                     <input type="number" min="1" name="txtSoLg"
-                           value="@item.iSoLuong" />
+                           value="@item.iSoluong" />
                 </td>
-                <td> @Html.DisplayFor(modelitem => item.dThanhTien) </td>
+                <td> @Html.DisplayFor(modelitem => item.dThanhtien) </td>
                 <td>
                     <a href="@Url.Action("Detail", "Sach",new {id=item.masach})">
                         Chỉ tiết

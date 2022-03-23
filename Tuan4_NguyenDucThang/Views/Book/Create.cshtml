@@ -1,5 +1,4 @@
-﻿@model Tuan4_NguyenDucThang.Models.Sach
-
+﻿@model  Tuan4_NguyenDucThang.Models.Sach
 @{
     ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -7,11 +6,10 @@
 
 <h2>Create</h2>
 
-
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Sach</h4>
         <hr />

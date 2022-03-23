@@ -33,9 +33,11 @@
         </dt>
 
         <dd>
-            <img src=" @Html.DisplayFor(model => model.hinh)" style="width:100px; height : 150px" />
+            @Html.DisplayFor(model => model.hinh)
         </dd>
-
+        <dd>
+            <img src="@Model.hinh" />
+        </dd>
         <dt>
             @Html.DisplayNameFor(model => model.giaban)
         </dt>
@@ -62,7 +64,8 @@
 
     </dl>
 
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
